@@ -18,7 +18,7 @@ namespace FinalProject
             Console.WriteLine("Select game you want to play!");
             Console.WriteLine("1.OX Game");
             Console.WriteLine("2.Guess the number");
-            Console.WriteLine("3.Pokdeng");
+            Console.WriteLine("3.Hig & hLow");
             Console.WriteLine("4.Exit");
 
             //2.Select game
@@ -64,7 +64,7 @@ namespace FinalProject
             }
             else if (gameNumber == 3)
             {
-                Console.WriteLine("Go to play Pokdeng");
+                Console.WriteLine("Go to play High & Low");
                 Thread.Sleep(2000);
                 Console.Clear();
                 GameHighLow.PlayHighLow();
@@ -234,47 +234,31 @@ namespace FinalProject
     }
     class GameGuess
     {
+        static int startRandomtNumber = 0;
+        static int endRandomNumber = 0;
         public static void PlayGameGuess()
         {
             int playerTurn = 1;
             int selection;
-            int startRandomtNumber;
-            int endRandomNumber;
             int changeSelect = 0;
-            bool checkStart;
-            bool checkEnd;
+            int startNumber;
+            int endNumber;
             bool checkSelection;
             bool checkWin = false;
 
             Console.WriteLine("Guess the number");
             Console.WriteLine("Please Enter range of number to ramdom.");
-            do
-            {
-                Console.Write("Start Number : ");
-                checkStart = Int32.TryParse(Console.ReadLine(), out startRandomtNumber);
-                if (checkStart != true)
-                {
-                    Console.WriteLine("You enter wrong type.");
-                }
-            } while (checkStart != true);
 
-            do
-            {
-                Console.Write("End Number : ");
-                checkEnd = Int32.TryParse(Console.ReadLine(), out endRandomNumber);
-                if (checkEnd != true)
-                {
-                    Console.WriteLine("You enter wrong type.");
-                }
-            } while (checkEnd != true);
+            startNumber = Checkinput("start", false, startRandomtNumber);
+            endNumber = Checkinput("end", false, endRandomNumber);
+
             Random rnd = new Random();
-            int randomNumber = rnd.Next(startRandomtNumber, endRandomNumber + 1);
-            Console.WriteLine(randomNumber);
-            if (Math.Abs(startRandomtNumber - endRandomNumber) < 10)
+            int randomNumber = rnd.Next(startNumber, endNumber + 1);
+            if (Math.Abs(startNumber - endNumber) < 10)
             {
                 changeSelect = 4;
             }
-            else if (Math.Abs(startRandomtNumber - endRandomNumber) > 10 && Math.Abs(startRandomtNumber - endRandomNumber) < 100)
+            else if (Math.Abs(startNumber - endNumber) > 10 && Math.Abs(startNumber - endNumber) < 100)
             {
                 changeSelect = 8;
             }
@@ -319,8 +303,8 @@ namespace FinalProject
                 }
                 else
                 {
-                   checkWin = true;
-                   changeSelect = 0;
+                    checkWin = true;
+                    changeSelect = 0;
                 }
                 foreach (var number in playerSelect)
                 {
@@ -347,15 +331,177 @@ namespace FinalProject
             PlayerDoNext.pageCheck = 2;
             PlayerDoNext.PlayerSelect();
         }
-
+        public static int Checkinput(string random, bool check, int input)
+        {
+            do
+            {
+                Console.Write($"Enter {random} Number : ");
+                check = Int32.TryParse(Console.ReadLine(), out input);
+                if (check != true)
+                {
+                    Console.WriteLine("You enter wrong type.");
+                }
+            } while (check != true);
+            return input;
+        }
     }
     class GameHighLow
     {
+        static bool playerSelectCheck = false;
+        static int player1Token;
+        static int player2Token;
+        static int player1Bet = 0;
+        static int player2Bet = 0;
         public static void PlayHighLow()
         {
+            GameReset();
+            string player1Select;
+            string player2Select;
+            bool result = false;
 
+            Console.WriteLine("High & Low Game");
+            Console.WriteLine("Play with 2 player.");
+            Console.WriteLine("You can select High or Low.");
+            Console.WriteLine("3 - 10 is Low, 12 - 18 is High");
+            Console.WriteLine("If random is 11 is High-Low your bet will lost");
+            Console.WriteLine("Game will end when someone have 15 Token or 0 Token");
+            Console.WriteLine($"Player 1 have {player1Token} Token");
+            Console.WriteLine($"Player 2 have {player2Token} Token");
+            Console.WriteLine();
+
+            do
+            {
+                player1Select = PlayerCheck(1, "");
+                player2Select = PlayerCheck(2, "");
+                Random rnd = new Random();
+                int randomNumber = rnd.Next(3, 19);
+                Console.WriteLine("doing random.");
+                Thread.Sleep(2000);
+                Console.WriteLine("Random end please bet your Token");
+                player1Bet = Checkinput(1, false, player1Bet, player1Token);
+                player2Bet = Checkinput(2, false, player2Bet, player2Token);
+                Console.WriteLine($"Random number is {randomNumber}");
+                if (randomNumber < 11 && randomNumber >= 3)
+                {
+                    Console.WriteLine("Random is Low.");
+                    if (player1Select == "Low" || player1Select == "low")
+                    {
+                        Console.WriteLine($"Player 1 got {player1Bet}");
+                        Console.WriteLine($"Player 1 have {player1Token += player1Bet}");
+                    }
+                    else if (player1Select == "High" || player1Select == "high")
+                    {
+                        Console.WriteLine($"Player 1 lost {player1Bet}");
+                        Console.WriteLine($"Player 1 have {player1Token -= player1Bet}");
+                    }
+
+                    if (player2Select == "Low" || player2Select == "low")
+                    {
+                        Console.WriteLine($"Player 2 got {player2Bet}");
+                        Console.WriteLine($"Player 2 have {player2Token += player2Bet}");
+                    }
+                    else if (player2Select == "High" || player2Select == "high")
+                    {
+                        Console.WriteLine($"Player 2 got {player2Bet}");
+                        Console.WriteLine($"Player 2 have {player2Token -= player2Bet}");
+                    }
+                }
+                else if (randomNumber == 11)
+                {
+                    Console.WriteLine("Random is High - Low.");
+                    Console.WriteLine($"Player 1 lost {player1Bet}");
+                    Console.WriteLine($"Player 1 have {player1Token -= player1Bet}");
+                    Console.WriteLine($"Player 2 lost {player2Bet}");
+                    Console.WriteLine($"Player 2 have {player2Token -= player2Bet}");
+                }
+                else if (randomNumber < 19 || randomNumber >= 12)
+                {
+                    Console.WriteLine("Random is High.");
+                    if (player1Select == "High" || player1Select == "high")
+                    {
+                        Console.WriteLine($"Player 1 got {player1Bet}");
+                        Console.WriteLine($"Player 1 have {player1Token += player1Bet}");
+                    }
+                    else if (player1Select == "Low" || player1Select == "low")
+                    {
+                        Console.WriteLine($"Player 1 got {player1Bet}");
+                        Console.WriteLine($"Player 1 have {player1Token -= player1Bet}");
+                    }
+
+                    if (player2Select == "High" || player2Select == "high")
+                    {
+                        Console.WriteLine($"Player 2 got {player2Bet}");
+                        Console.WriteLine($"Player 2 have {player2Token += player2Bet}");
+                    }
+                    else if (player2Select == "Low" || player2Select == "low")
+                    {
+                        Console.WriteLine($"Player 2 got {player2Bet}");
+                        Console.WriteLine($"Player 2 have {player2Token -= player2Bet}");
+                    }
+                }
+                if (player1Token < 0 || player1Token >= 15 || player2Token < 0 || player2Token >= 15)
+                {
+                    if (player1Token > player2Token)
+                    {
+                        Console.WriteLine("Player 1 Win!!!");
+                    }
+                    else if (player1Token < player2Token)
+                    {
+                        Console.WriteLine("Player 2 Win!!!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Draw");
+                    }
+                    result = true;
+                }
+            } while (result != true);
+            PlayerDoNext.pageCheck = 3;
+            PlayerDoNext.PlayerSelect();
         }
-
+        public static string PlayerCheck(int player, string selection)
+        {
+            do
+            {
+                Console.Write($"Player {player} please select : ");
+                selection = Console.ReadLine();
+                if (selection == "High" || selection == "high" || selection == "Low" || selection == "low")
+                {
+                    Console.WriteLine($"Player {player} select {selection}");
+                    playerSelectCheck = true;
+                }
+                else
+                {
+                    Console.WriteLine("You enter wrong word please selct again.");
+                }
+            } while (playerSelectCheck == false);
+            return selection;
+        }
+        public static int Checkinput(int player, bool check, int input, int token)
+        {
+            do
+            {
+                Console.Write($"Player {player} bet : ");
+                do
+                {
+                    check = Int32.TryParse(Console.ReadLine(), out input);
+                    if (check != true)
+                    {
+                        Console.WriteLine("You enter wrong type.");
+                    }
+                } while (check != true);
+                if (input > token)
+                {
+                    Console.WriteLine("you don't have enough Token.");
+                }
+            } while (input > token);
+            return input;
+        }
+        public static void GameReset()
+        {
+            player1Token = 10;
+            player2Token = 10;
+        }
     }
     class PlayerDoNext
     {
@@ -408,7 +554,7 @@ namespace FinalProject
             }
             else if (select == 3)
             {
-            return;
+                return;
             }
         }
     }
