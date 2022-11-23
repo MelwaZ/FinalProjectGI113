@@ -384,23 +384,23 @@ namespace FinalProject
                 if (randomNumber < 11 && randomNumber >= 3)
                 {
                     Console.WriteLine("Random is Low.");
-                    if (player1Select == "Low" || player1Select == "low")
+                    if (player1Select.Equals("Low") || player1Select.Equals("low"))
                     {
                         Console.WriteLine($"Player 1 got {player1Bet}");
                         Console.WriteLine($"Player 1 have {player1Token += player1Bet}");
                     }
-                    else if (player1Select == "High" || player1Select == "high")
+                    else if (player1Select.Equals("High") || player1Select.Equals("high"))
                     {
                         Console.WriteLine($"Player 1 lost {player1Bet}");
                         Console.WriteLine($"Player 1 have {player1Token -= player1Bet}");
                     }
 
-                    if (player2Select == "Low" || player2Select == "low")
+                    if (player2Select.Equals("Low") || player2Select.Equals("low"))
                     {
                         Console.WriteLine($"Player 2 got {player2Bet}");
                         Console.WriteLine($"Player 2 have {player2Token += player2Bet}");
                     }
-                    else if (player2Select == "High" || player2Select == "high")
+                    else if (player2Select.Equals("High") || player2Select.Equals("high"))
                     {
                         Console.WriteLine($"Player 2 got {player2Bet}");
                         Console.WriteLine($"Player 2 have {player2Token -= player2Bet}");
@@ -417,23 +417,23 @@ namespace FinalProject
                 else if (randomNumber < 19 || randomNumber >= 12)
                 {
                     Console.WriteLine("Random is High.");
-                    if (player1Select == "High" || player1Select == "high")
+                    if (player1Select.Equals("High") || player1Select.Equals("high"))
                     {
                         Console.WriteLine($"Player 1 got {player1Bet}");
                         Console.WriteLine($"Player 1 have {player1Token += player1Bet}");
                     }
-                    else if (player1Select == "Low" || player1Select == "low")
+                    else if (player1Select.Equals("Low") || player1Select.Equals("low"))
                     {
                         Console.WriteLine($"Player 1 got {player1Bet}");
                         Console.WriteLine($"Player 1 have {player1Token -= player1Bet}");
                     }
 
-                    if (player2Select == "High" || player2Select == "high")
+                    if (player2Select.Equals("High") || player2Select.Equals("high"))
                     {
                         Console.WriteLine($"Player 2 got {player2Bet}");
                         Console.WriteLine($"Player 2 have {player2Token += player2Bet}");
                     }
-                    else if (player2Select == "Low" || player2Select == "low")
+                    else if (player2Select.Equals("Low") || player2Select.Equals("low"))
                     {
                         Console.WriteLine($"Player 2 got {player2Bet}");
                         Console.WriteLine($"Player 2 have {player2Token -= player2Bet}");
@@ -465,7 +465,7 @@ namespace FinalProject
             {
                 Console.Write($"Player {player} please select : ");
                 selection = Console.ReadLine();
-                if (selection == "High" || selection == "high" || selection == "Low" || selection == "low")
+                if (selection.Equals("High") || selection.Equals("high") || selection.Equals("Low") || selection.Equals("low"))
                 {
                     Console.WriteLine($"Player {player} select {selection}");
                     playerSelectCheck = true;
