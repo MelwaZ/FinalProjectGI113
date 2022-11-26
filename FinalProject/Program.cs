@@ -164,7 +164,6 @@ namespace FinalProject
         }
         private static int CheckWin()
         {
-            #region Horzontal Winning Condtion
             //Winning Condition For First Row
             if (tableOXArray[1] == tableOXArray[2] && tableOXArray[2] == tableOXArray[3])
             {
@@ -180,8 +179,7 @@ namespace FinalProject
             {
                 return 1;
             }
-            #endregion
-            #region vertical Winning Condtion
+
             //Winning Condition For First Column
             else if (tableOXArray[1] == tableOXArray[4] && tableOXArray[4] == tableOXArray[7])
             {
@@ -197,8 +195,7 @@ namespace FinalProject
             {
                 return 1;
             }
-            #endregion
-            #region Diagonal Winning Condition
+
             else if (tableOXArray[1] == tableOXArray[5] && tableOXArray[5] == tableOXArray[9])
             {
                 return 1;
@@ -207,14 +204,13 @@ namespace FinalProject
             {
                 return 1;
             }
-            #endregion
-            #region Checking For Draw
+
             // If all the cells or values filled with X or O then any player has won the match
             else if (tableOXArray[1] != '1' && tableOXArray[2] != '2' && tableOXArray[3] != '3' && tableOXArray[4] != '4' && tableOXArray[5] != '5' && tableOXArray[6] != '6' && tableOXArray[7] != '7' && tableOXArray[8] != '8' && tableOXArray[9] != '9')
             {
                 return -1;
             }
-            #endregion
+
             else
             {
                 return 0;
@@ -229,7 +225,6 @@ namespace FinalProject
             playerTurnReset = playerTurn = 1;
             scoreReset = score = 0;
             tableOXArray = tableReset;
-
         }
     }
     class GameGuess
